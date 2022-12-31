@@ -12,45 +12,47 @@ modalClose.addEventListener('click', () => {
 })
 
 const onDrop = async (e) => {
-    e.preventDefault()
     if (!input.files.length) {
+        console.log('setting file..')
+        console.log(e.dataTransfer)
         input.files = e.dataTransfer.files
     }
-    const file = input.files[0]
+    
     const res = await fetch('/submit', {method: 'post', body: new FormData(form)})
     const object = await res.json()
     const result = object.result
     
     const fr = new FileReader()
     fr.addEventListener('load', () => {
-        console.log('setting src...')
         modalImg.setAttribute('src', fr.result)
-        console.log(fr.result)
-
     }, {once: true})
-    fr.onload = () => {
-        
-    }
-    fr.readAsDataURL(file)
+    fr.readAsDataURL(input.files[0])
     animalText.textContent = result === "cat" ? "It's a cat!" : result === "dog" ? "It's a dog!" : "Can't identify"
     modalWrapper.classList.add('active')
     drag.classList.remove('dragover')
     form.reset()
 }
-drag.addEventListener('drop', onDrop)
+drag.ondrop = (e) => {
+    e.preventDefault()
+    onDrop(e)
+}
 input.addEventListener('change', onDrop)
+
+
 
 drag.addEventListener('dragover', (e) => {
     e.preventDefault() 
     drag.classList.add('dragover')
 })
-
-drag.addEventListener('dragstart', (e) => {
-    e.preventDefault()  
-})
 drag.addEventListener('dragleave', (e) => {
+    e.preventDefault()
     drag.classList.remove('dragover')
 })
+
+// drag.addEventListener('dragstart', (e) => {
+//     e.preventDefault()  
+// })
+
 
 drag.addEventListener('click', e => {
     input.click()

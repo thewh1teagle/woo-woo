@@ -9,7 +9,7 @@ DOG = 0
 CAT = 1
 
 # Load the model
-model = keras.models.load_model('../classifier.h5')
+model = keras.models.load_model('classifier.h5')
 
 
 def predict(bytes_image):

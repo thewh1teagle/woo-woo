@@ -1,4 +1,7 @@
 Python program to classify between dogs and cats
+
+![simplescreenrecorder-2022-12-31_22 04 13(2)](https://user-images.githubusercontent.com/61390950/210154904-40622a62-0eab-43dd-a8db-b8f8901f9052.gif)
+
 It uses cnn network, the layers are
 - input layer (explicity passed into second layer in the code)
 - convolutional layer
@@ -9,26 +12,28 @@ It uses cnn network, the layers are
 - second dropout layer 
 - output dense layer
 
-Lab folder contains the code for preparing the dataset, 
+
+`Lab` folder contains the code for preparing the dataset, 
 and creating / validating the model
 
-App folder contains a simple Flask web app to demonstrate the model, 
+`App` folder contains a simple Flask web app to demonstrate the model, 
 it allows the user to upload image of cat or dog, identifing using 
-the classifier.h5 model we created, and then it shows the result in the app
+the `classifier.h5` model we created, and then it shows the result in the app
 
 Instructions:
-get 12,500 cats and dogs images from https://www.kaggle.com/competitions/dogs-vs-cats/code
-In lab folder, create these folders
-/lab/images/{cats,dogs}/
-/lab/processed/{cats,dogs}/{training,validating}
+get `12,500` cats and dogs images from https://www.kaggle.com/competitions/dogs-vs-cats/code
+In `lab` folder, create these folders
+`/lab/images/{cats,dogs}/`
+`/lab/processed/{cats,dogs}/{training,validating}`
 extract the zip file you just downloaded from kaggle 
-and put the dogs and cats in the right folders under /lab/images/
+and put the dogs and cats in the right folders under `/lab/images/`
 
-Run pre_process.py
-Run train.py
-Run validate.py
+Run `pre_process.py`
+Run `train.py`
+Run `validate.py`
 validate that the model works. 
-Not you can use classifier.h5 generated from training. check out app folder!
+Not you can use `classifier.h5`
+generated from training. check out app folder!
 
 
 Mailstones:
