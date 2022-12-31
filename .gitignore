@@ -2,3 +2,5 @@ train.zip
 images/
 processed/
 *.h5
+*.jpg
+__pycache__

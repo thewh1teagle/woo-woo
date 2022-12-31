@@ -24,7 +24,7 @@ def get_model(input_shape):
 
 def load_dataset(animal_type):
     animal_name = 'dog' if animal_type == DOGS else 'cat'
-    training_path = Path(f'./processed/{animal_name}s/training')
+    training_path = Path(f'../processed/{animal_name}s/training')
     images = []
     for i in range(TRAINING_START_IDX, TRAINING_STOP_IDX):
         image = cv2.imread(str(training_path / f'{animal_name}.{i}.jpg'), cv2.IMREAD_GRAYSCALE)

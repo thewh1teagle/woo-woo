@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woo Woo!</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Is a cat or a dog?</h1>
+    <form enctype="multipart/form-data" method="post" action="/submit">
+        <div class="drag">
+            <input type="file" class="image" name="file">
+            <h2>Drag and drop an image</h2>
+        </div>
+    </form>
+    <div class="modal-wrapper">
+        <div class="modal">
+            <h2 class="animal-text">It's a</h2>
+            <img src="" alt="">
+            <button class="close">X</button>
+        </div>
+    </div>
+   <script src="/static/script.js"></script>
+</body>
+</html>

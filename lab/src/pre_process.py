@@ -1,7 +1,5 @@
 import pathlib
 import cv2
-from PIL import Image
-import numpy as np
 
 
 TRAINING_START_IDX = 1
@@ -23,11 +21,11 @@ def pre_process(image):
 
 if __name__ == '__main__':
     # we have total of 12,500 images for each folder, dogs and cats.
-    for i in ['cats', 'dogs']:
-        pathlib.Path(f'./processed/{i}/training').mkdir(parents=True, exist_ok=True)
-        pathlib.Path(f'./processed/{i}/validating').mkdir(parents=True, exist_ok=True)
-    dogs_path = pathlib.Path('./images/dogs')
-    cats_path = pathlib.Path('./images/cats')
+    for animal in ['cats', 'dogs']:
+        pathlib.Path(f'../pre/{animal}/training').mkdir(parents=True, exist_ok=True)
+        pathlib.Path(f'../pre/{animal}/validating').mkdir(parents=True, exist_ok=True)
+    dogs_path = pathlib.Path('../images/dogs')
+    cats_path = pathlib.Path('../images/cats')
     
 
     # For dogs training

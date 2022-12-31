@@ -1,5 +1,4 @@
 
-import tensorflow
 from tensorflow import keras
 from pathlib import Path
 import cv2
@@ -12,7 +11,7 @@ CATS = 1
 model = keras.models.load_model('classifier.h5')
 
 # Make predictions on a batch of data
-validate_dogs_path = Path('./processed/dogs/training')
+validate_dogs_path = Path('../processed/dogs/training')
 batch_data = [] # Batch of images (or other data)
 for i in range(1, 2):
     image_path = "cat.jpg" #str(validate_dogs_path / f'dog.{i}.jpg')
@@ -23,8 +22,6 @@ for i in range(1, 2):
     image = image[16:240, 16:240] # crop into shape of 224x224
     image = cv2.cvtColor(np.float32(image), cv2.COLOR_BGR2GRAY)
     image = np.reshape(image, (1,224, 224,1))
-    
-    
     batch_data.append(image)
 
 total = len(batch_data)
