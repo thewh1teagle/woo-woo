@@ -1,0 +1,4 @@
+train.zip
+images/
+processed/
+*.h5
