@@ -13,16 +13,13 @@ def validate(animal):
     images_path = settings.PROCESSING_PATH
     images_path /= animal_name
     images_path /= 'validate'
-    for i in range(settings.VALIDATING_START_IDX, settings.VALIDATING_END_IDX):
+    for i in range(settings.VALIDATING_START_IDX, 5110):
         
         image_path = images_path / f'{animal_name}.{i}.jpg'
         image_path = str(image_path)
         image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        image = cv2.resize(image, (256, 256))
-        # Crop image
-        image = image[16:240, 16:240] # crop into shape of 224x224
-        image = np.reshape(image, (1,224, 224,1))
+        image = np.reshape(image, (1, 224, 224,1)) # 224x224x1 (Grayscaled)
         data.append(image)
     total = len(data)
     correct = 0

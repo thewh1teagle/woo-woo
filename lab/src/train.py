@@ -20,10 +20,10 @@ def get_model(input_shape):
     return model
 
 def load_dataset(animal_type):
-    animal_name = 'dog' if animal_type == settings.DOGS else 'cat'
-    training_path = settings.PROCESSING_PATH / f'{animal_name}s/train'
+    animal_name = 'dog' if animal_type == settings.DOG else 'cat'
+    training_path = settings.PROCESSING_PATH / f'{animal_name}/train'
     images = []
-    for i in range(settings.TRAINING_START_IDX, settings.TRAINING_STOP_IDX):
+    for i in range(settings.TRAINING_START_IDX, settings.TRAINING_END_IDX):
         image = cv2.imread(str(training_path / f'{animal_name}.{i}.jpg'), cv2.IMREAD_GRAYSCALE)
         # normalize
         image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
@@ -43,8 +43,8 @@ def train(dataset):
 
 if __name__ == "__main__":
     print('Loading data...')
-    dogs_dataset = load_dataset(settings.DOGS)
-    cats_dataset = load_dataset(settings.CATS)
+    dogs_dataset = load_dataset(settings.DOG)
+    cats_dataset = load_dataset(settings.CAT)
 
     print('Training model...')
     model = train(dogs_dataset + cats_dataset)
