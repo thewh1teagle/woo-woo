@@ -11,9 +11,8 @@ def submit():
     files = request.files
     file = files.get('file')
     stream = file.stream
-    print(file)
     result = predict(stream.read())
-    return jsonify({"result": 'cat' if result == CAT else 'dog'})
+    return jsonify({"animal": 'cat' if result == CAT else 'dog'})
 
 @app.route('/cat')
 def cat():

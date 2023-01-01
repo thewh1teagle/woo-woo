@@ -1,36 +1,45 @@
 
 from tensorflow import keras
-from pathlib import Path
 import cv2
 import numpy as np
-
-DOGS = 0
-CATS = 1
+import settings
 
 # Load the model
-model = keras.models.load_model('classifier.h5')
+model = keras.models.load_model(settings.CLASSIFIER_PATH)
 
-# Make predictions on a batch of data
-validate_dogs_path = Path('../processed/dogs/training')
-batch_data = [] # Batch of images (or other data)
-for i in range(1, 2):
-    image_path = "cat.jpg" #str(validate_dogs_path / f'dog.{i}.jpg')
-    image = cv2.imread(image_path)
-    image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-    image = cv2.resize(image, (256, 256))
-    # Crop image
-    image = image[16:240, 16:240] # crop into shape of 224x224
-    image = cv2.cvtColor(np.float32(image), cv2.COLOR_BGR2GRAY)
-    image = np.reshape(image, (1,224, 224,1))
-    batch_data.append(image)
+def validate(animal):
+    animal_name = 'cat' if settings.CAT == animal else 'dog'
+    data = []
+    images_path = settings.PROCESSING_PATH
+    images_path /= animal_name
+    images_path /= 'validate'
+    for i in range(settings.VALIDATING_START_IDX, settings.VALIDATING_END_IDX):
+        
+        image_path = images_path / f'{animal_name}.{i}.jpg'
+        image_path = str(image_path)
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        image = cv2.resize(image, (256, 256))
+        # Crop image
+        image = image[16:240, 16:240] # crop into shape of 224x224
+        image = np.reshape(image, (1,224, 224,1))
+        data.append(image)
+    total = len(data)
+    correct = 0
+    for i in data:
+        p = model.predict(i)
+        p = np.round(p)
+        p = 1 if p >= 1 else 0
+        if animal == p:
+            correct += 1
+        # else:
+        #     cv2.imshow('', i[0])
+        #     while cv2.waitKey(1) & 0xFF != ord('q'): pass
+    return correct, total
+    
 
-total = len(batch_data)
-correct = 0
-for i in batch_data:
-    p = model.predict(i) # A list of labels, one for each item in the batch
-    # Get the label for each item in the batch
-    if p >= 0.5:
-        print(p)
-        correct += 1
-    print(p)
-print(f'{correct} out of {total}')
+if __name__ == '__main__':
+    dogs_correct, dogs_total = validate(settings.DOG)
+    cats_correct, cats_total = validate(settings.CAT)
+    print(f'DOGS: {dogs_correct} out of {dogs_total} - {dogs_correct/100*dogs_total}')
+    print(f'CATS: {cats_correct} out of {cats_total} - {cats_correct/100*cats_total}')

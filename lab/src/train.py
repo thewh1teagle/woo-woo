@@ -4,11 +4,8 @@ import cv2
 from tensorflow import keras
 from keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
 from keras.models import Sequential
+import settings
 
-DOGS = 0
-CATS = 1
-TRAINING_START_IDX = 1
-TRAINING_STOP_IDX = 5001
 
 def get_model(input_shape):
     model = Sequential()
@@ -23,10 +20,10 @@ def get_model(input_shape):
     return model
 
 def load_dataset(animal_type):
-    animal_name = 'dog' if animal_type == DOGS else 'cat'
-    training_path = Path(f'../processed/{animal_name}s/training')
+    animal_name = 'dog' if animal_type == settings.DOGS else 'cat'
+    training_path = settings.PROCESSING_PATH / f'{animal_name}s/train'
     images = []
-    for i in range(TRAINING_START_IDX, TRAINING_STOP_IDX):
+    for i in range(settings.TRAINING_START_IDX, settings.TRAINING_STOP_IDX):
         image = cv2.imread(str(training_path / f'{animal_name}.{i}.jpg'), cv2.IMREAD_GRAYSCALE)
         # normalize
         image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
@@ -46,12 +43,12 @@ def train(dataset):
 
 if __name__ == "__main__":
     print('Loading data...')
-    dogs_dataset = load_dataset(DOGS)
-    cats_dataset = load_dataset(CATS)
+    dogs_dataset = load_dataset(settings.DOGS)
+    cats_dataset = load_dataset(settings.CATS)
 
     print('Training model...')
     model = train(dogs_dataset + cats_dataset)
 
     print('Saving model...')
-    model.save('classifier.h5')
+    model.save(settings.CLASSIFIER_PATH)
     print('Done!')

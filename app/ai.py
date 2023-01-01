@@ -1,7 +1,5 @@
 
-import tensorflow
 from tensorflow import keras
-from pathlib import Path
 import cv2
 import numpy as np
 
@@ -10,7 +8,6 @@ CAT = 1
 
 # Load the model
 model = keras.models.load_model('classifier.h5')
-
 
 def predict(bytes_image):
     np_image = np.frombuffer(bytes_image, dtype=np.uint8)
