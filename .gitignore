@@ -1,6 +1,5 @@
-train.zip
-images/
-processed/
 *.h5
 *.jpg
 __pycache__
+*.zip
+.ipynb_checkpoints

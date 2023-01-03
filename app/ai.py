@@ -1,26 +1,24 @@
 
-from tensorflow import keras
+from keras.models import load_model
 import cv2
 import numpy as np
 
-DOG = 0
-CAT = 1
+CAT = 0
+DOG = 1
 
-# Load the model
-model = keras.models.load_model('classifier.h5')
+IMAGE_WIDTH=128
+IMAGE_HEIGHT=128
+IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
+IMAGE_CHANNELS=3
+model = load_model('model.h5')
 
 def predict(bytes_image):
-    np_image = np.frombuffer(bytes_image, dtype=np.uint8)
-    image = cv2.imdecode(np_image, flags=1)
-    image = cv2.normalize(image, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-    image = cv2.resize(image, (256, 256))
-    # Crop image
-    image = image[16:240, 16:240] # crop into shape of 224x224
-    image = cv2.cvtColor(np.float32(image), cv2.COLOR_BGR2GRAY)
-    image = np.reshape(image, (1,224, 224,1))
-    p = model.predict(image) # A list of labels, one for each item in the batch
-    # Get the label for each item in the batch
-    p = p[0]
-    result = np.round(p)
-    result = DOG if result <= 0.5 else CAT
-    return result
+    buf = np.frombuffer(bytes_image, dtype=np.uint8)
+    img = cv2.imdecode(buf, flags=cv2.IMREAD_COLOR)
+    img = cv2.resize(img, (128, 128))
+    img = img[:128, :128]
+    img = img / 255
+    img = np.expand_dims(img, axis=0)
+    p = model.predict(img)
+    p = p.argmax(axis=1)
+    return p

@@ -53,6 +53,15 @@ function onDragLeave(e) {
     drag.classList.remove('dragover')
 }
 
+function onPaste(e) {
+    if (!input.files.length) {
+        input.files = e.clipboardData.files;
+    }
+    processImage()
+} 
+
+window.addEventListener('paste', onPaste);
+
 modal.addEventListener('click', (e) => e.stopPropagation())
 modalWrapper.addEventListener('click', () => modalWrapper.classList.remove('active'))
 drag.addEventListener('drop', onDrop)

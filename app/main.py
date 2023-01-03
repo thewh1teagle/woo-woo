@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from ai import predict, DOG, CAT
+from ai import predict, CAT, DOG
+
 app = Flask(__name__, template_folder="templates")
 
 @app.route("/")

@@ -30,14 +30,21 @@ h1 {
     margin: auto;
     margin-top: 10vh;
     border-radius: 20px;
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 7px;
     color: white;
     transition: all 0.3s ease-in-out;
 }
 
-.drag h2 {
+.drag h2, h6 {
     opacity: 0.5;
+}
+
+.drag h6 {
+    font-size: 0.7em;
 }
 
 .drag.dragover {
